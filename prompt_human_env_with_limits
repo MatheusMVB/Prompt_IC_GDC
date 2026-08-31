@@ -1,0 +1,46 @@
+    CONTEXTO: Criação de Gêmeos Digitais de Alto Nível (Complexos ou Compostos) via Árvore de Sintaxe Abstrata (AST).
+    DADOS REAIS DISPONÍVEIS: {json.dumps(resumo_twins)}
+    
+    FOCO DO USUÁRIO: Gêmeo digtial Humano-ambiente com foco na segurança do trabalho. Gere indicações sobre a segurança. Leve em conta os limites de temperatura de 17-35 graus, para o ruído de até 90 decibeis, para a luminosidade de 300 a 1000 lumens, e para a presença de gases, superior a 200 para o ambiente, para a segurança humana leve em conta os valores padrões
+
+
+    LEIA OS ATRIBUTOS DAS THINGS PARA ENTENDER A DESCRIÇÃO DE CADA ATRIBUTO.
+    USE A DESCRIÇÃO DOS ATRIBUTOS PARA ENTENDER COMO AGREGAR CADA ATRIBUTO.
+    CRIE UMA PROPRIEDA VIRTUAL DEDICADA PARA ARMAZENAR O MOMENTO DA ATUALIZAÇÃO USANDO A FUNÇÃO 'tempo_atual'.
+    OS ATTRIBUTES NO DITTO FORNECEM UM DESCRIÇÃO DE CADA ATRIBUTO DOS GÊMEOS UTILIZADOS
+    TAREFA: Defina a estratégia de fusão (Composto ou Complexo) e mapeie os atributos.        
+
+    REGRAS DA AST E DE NEGÓCIO:
+    1. Utilize os 'valores' para realizar os cálculos matemáticos. Para booleanos como existe ou necessita etc... Use 0 como False e 1 como True  
+    2. Utilize os 'metadados' contidos em 'attributes' para entender a semântica e a finalidade de cada sensor, garantindo que o seu mapeamento de propriedades virtuais seja tecnicamente correto.
+    3. Agregadores: 'media', 'maximo', 'minimo', 'soma_agregada', 'ultimo_valor'. Transformam arrays em números.
+    4. Matemática: 'soma', 'subtracao', 'multiplicacao', 'divisao'. Operam sobre agregados.
+    5. PROFUNDIDADE EXIGIDA: O Gêmeo deve detalhar o foco estipulado de forma analítica. A analise dos atributos é a principal métrica, o foco deve apenas guiar.
+    6. DEFINA ATRIBUTOS RELEVANTES PARA A ANALISE.
+    7. NÃO INVENTE nomes de sensores primários. Use EXATAMENTE as chaves presentes nos 'DADOS REAIS DISPONÍVEIS'.
+    8. ENCADEAMENTO DE VARIÁVEIS: Você PODE e DEVE criar propriedades de alto nível que dependem de outras propriedades virtuais que você acabou de criar. Para isso, passe o nome exato da propriedade virtual criada anteriormente como argumento na função atual. Respeite a ordem cronológica (a variável deve ser declarada acima antes de ser usada abaixo).
+
+    ID OBRIGATÓRIO: {next_id}
+
+    RETORNO ESPERADO (ESTRITAMENTE O JSON ABAIXO):
+    {{
+      "tipo_arquitetura": "Complexo",
+      "foco_aplicado": "{foco if foco else 'Geral'}",
+      "hldt_config": {{ 
+          "id": "{next_id}", 
+          "propriedades_virtuais": [
+              {{
+                  "nome": "metrica_parcial_1",
+                  "categoria": "Analitica",
+                  "descricao_semantica": "Descricao do calculo base...",
+                  "expressao": {{ "funcao": "media", "argumentos": [ "sensor_raw_1", "sensor_raw_2" ] }}
+              }},
+              {{
+                  "nome": "metrica_agregada_final",
+                  "categoria": "Sintese",
+                  "descricao_semantica": "Usa as metricas parciais para criar um indice final...",
+                  "expressao": {{ "funcao": "soma", "argumentos": [ "metrica_parcial_1", "outra_metrica_criada" ] }}
+              }}
+          ]
+      }}
+    }}
